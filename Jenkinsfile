@@ -53,7 +53,7 @@ pipeline {
         stage('Remove Unused docker image') {
             steps{
                 sh "docker rmi $registry:$BUILD_NUMBER"
-                sh "docker run -d --name petcliniccc -p 8090:8080 $registry:$BUILD_NUMBER"
+                sh "docker run -d --name petcliniccc1 -p 8090:8080 $registry:$BUILD_NUMBER"
             }
         }
     }
