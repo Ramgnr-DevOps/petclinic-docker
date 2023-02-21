@@ -1,7 +1,7 @@
 pipeline {
     environment {
-        registry = "227chanti/spring-boot-docker-appp"
-        registryCredential = "CHANTI_DOCKER_CRED"
+        registry = "cvaa/petclinic"
+        registryCredential = "DOCK_CRED_CVA"
         dockerImage = ''
         mavenHome = tool name: "Maven3", type: "maven"
         mavenCMD = "${mavenHome}/bin/mvn"
@@ -19,7 +19,7 @@ pipeline {
         stage('code quality check') {
             steps {
                 script {
-                    withSonarQubeEnv(credentialsId: 'SONAR_SHIVA') {
+                    withSonarQubeEnv(credentialsId: 'sonar') {
                        sh "${mavenCMD} sonar:sonar"
                     }
                 }
@@ -28,7 +28,7 @@ pipeline {
         
         stage('upload to nexus') {
             steps {
-                nexusArtifactUploader artifacts: [[artifactId: 'spring-petclinic', classifier: '', file: 'target/spring-petclinic-2.7.0-SNAPSHOT.jar', type: 'jar']], credentialsId: 'NEXUS_CRED', groupId: 'org.springframework.samples', nexusUrl: '54.198.51.199:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'aaa_aaa', version: '2.7.0-SNAPSHOT'
+                nexusArtifactUploader artifacts: [[artifactId: 'spring-petclinic', classifier: '', file: 'target/spring-petclinic-2.7.0-SNAPSHOT.jar', type: 'jar']], credentialsId: 'NEXUS_CRED', groupId: 'org.springframework.samples', nexusUrl: '54.236.7.176:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'aaa_aaa', version: '2.7.0-SNAPSHOT'
             }
         }
         
@@ -53,7 +53,7 @@ pipeline {
         stage('Remove Unused docker image') {
             steps{
                 sh "docker rmi $registry:$BUILD_NUMBER"
-                sh "docker run -d --name petclinic2 -p 8090:8080 $registry:$BUILD_NUMBER"
+                sh "docker run -d --name petcliniccc -p 8090:8080 $registry:$BUILD_NUMBER"
             }
         }
     }
