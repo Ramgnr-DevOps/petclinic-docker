@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        registry = "cvaa/petclinic1"
+        registry = "cvaa/petclinic2"
         registryCredential = "DOCK_CRED_CVA"
         dockerImage = ''
         mavenHome = tool name: "Maven3", type: "maven"
@@ -53,7 +53,7 @@ pipeline {
         stage('Remove Unused docker image') {
             steps{
                 sh "docker rmi $registry:$BUILD_NUMBER"
-                sh "docker run -d --name petcliniccc12 -p 8091:8080 $registry:$BUILD_NUMBER"
+                sh "docker run -d --name petclinic123 -p 8082:8080 $registry:$BUILD_NUMBER"
             }
         }
     }
